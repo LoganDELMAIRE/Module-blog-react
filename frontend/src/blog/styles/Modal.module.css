@@ -1,0 +1,403 @@
+@import './variables.css';
+.permissionsSection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.permissionGroup {
+  margin-bottom: 1.5rem;
+  background-color: var(--card_background);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.permissionGroup h3 {
+  margin-bottom: 1rem;
+  color: var(--text_secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.permissionCheckbox {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.permissionCheckbox:last-child {
+  margin-bottom: 0;
+}
+
+.permissionCheckbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--secondary);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.permissionCheckbox input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--modal_background);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 { 
+  margin: 0 0 1.5rem 0;
+  color: var(--text_primary);
+  font-size: 1.5rem;
+}
+
+.formGroup {
+  padding-right: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text_secondary);
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="email"],
+.formGroup input[type="password"],
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  margin-right: 1rem;
+  box-sizing: border-box;
+  color: white;
+}
+
+.formGroup input[type="text"]:focus,
+.formGroup input[type="email"]:focus,
+.formGroup input[type="password"]:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.formGroup input[type="text"]:disabled,
+.formGroup input[type="email"]:disabled,
+.formGroup input[type="password"]:disabled,
+.formGroup textarea:disabled,
+.formGroup select:disabled {
+  background-color: var(--background_alt);
+  cursor: not-allowed;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--secondary);
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primaryButton {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.primaryButton:hover {
+  background: var(--primary);
+}
+
+.secondaryButton {
+  background: var(--secondary);
+  color: var(--text_secondary);
+  border: none;
+}
+
+.secondaryButton:hover {
+  background: var(--secondary);
+}
+
+.select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.select:disabled {
+  background-color: var(--background_alt);
+  cursor: not-allowed;
+}
+
+.select option {
+  padding: 0.5rem;
+}
+
+
+.role-super_admin {
+  color: #805ad5;
+  font-weight: 500;
+}
+
+.role-admin {
+  color: #2b6cb0;
+  font-weight: 500;
+}
+
+.role-moderator {
+  color: #c05621;
+  font-weight: 500;
+}
+
+
+.error {  
+  background-color: var(--background_alt);
+  color: var(--accent);
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--accent);
+}
+
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+  font-family: inherit;
+  color: var(--text_secondary);
+}
+
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary);  
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+
+.modal.small {
+  max-width: 400px;
+}
+
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+
+.blogModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #00000080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.blogModalContent {
+  background: var(--modal_background);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+.blogModalImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.blogModalBody {
+  padding: 2rem;
+}
+
+.blogModalTitle {
+  font-size: 2.5rem;
+  color: var(--text_secondary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.blogModalText {
+  color: var(--text_secondary);
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.blogModalText h2 {
+  text-align: left;
+}
+
+.blogModalMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--text_primary);
+  color: var(--text_secondary);
+  font-size: 0.9rem;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--button_primary_bg);
+  color: var(--button_primary_text);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+  background: var(--button_danger_bg);
+  color: var(--button_danger_text);
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .blogModalOverlay {
+    padding: 1rem;
+  }
+
+  .blogModalImage {
+    height: 250px;
+  }
+
+  .blogModalBody {
+    padding: 1.5rem;
+  }
+
+  .blogModalTitle {
+    font-size: 2rem;
+  }
+}
+
+/* Style pour chaque item de permission */
+.permissionItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+  padding: 0.25rem 0;
+}
+
+/* Style pour le label */
+.permissionLabel {
+  flex: 1;
+  color: var(--text_primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hover effect */
+.permissionItem:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.checkboxGroup {
+  background-color: var(--card_background);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-y: auto;
+} 

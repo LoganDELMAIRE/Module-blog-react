@@ -1,0 +1,140 @@
+@import './variables.css';
+
+.setupContainer {
+  background: var(--background_alt);
+  padding: 2rem;
+  width: 100%;
+}
+
+.setupCard {
+  background: var(--card_background);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 400px auto auto auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--card_border);
+}
+
+.setupCard h1 {
+  font-size: 1.75rem;
+  color: var(--text_primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.setupCard p {
+  color: var(--text_secondary);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--text_secondary);
+}
+
+.formGroup input {
+  padding: 0.75rem;
+  border: 1px solid var(--input_border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--input_background);
+  color: var(--input_text);
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--input_focus_border);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.error {
+  background: var(--error);
+  color: var(--text_light);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.submitButton {
+  background: var(--button_primary_bg);
+  color: var(--button_primary_text);
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submitButton:hover {
+  opacity: 0.9;
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loadingState {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text_secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 2rem auto;
+  border: 4px solid var(--secondary);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.stepIndicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.step {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--secondary);
+  margin: 0 5px;
+}
+
+.step.active {
+  background: var(--primary);
+}
+
+.step.completed {
+  background: var(--success);
+} 

@@ -1,0 +1,67 @@
+.blogScrollbar::-webkit-scrollbar-button:start:decrement,
+.blogScrollbar::-webkit-scrollbar-button:end:increment,
+.navigation::-webkit-scrollbar-button:start:decrement,
+.navigation::-webkit-scrollbar-button:end:increment,
+.modal::-webkit-scrollbar-button:start:decrement,
+.modal::-webkit-scrollbar-button:end:increment,
+.editor::-webkit-scrollbar-button:start:decrement,
+.editor::-webkit-scrollbar-button:end:increment,
+.checkboxGroup::-webkit-scrollbar-button:start:decrement,
+.checkboxGroup::-webkit-scrollbar-button:end:increment,
+.permissionGroup::-webkit-scrollbar-button:start:decrement,
+.permissionGroup::-webkit-scrollbar-button:end:increment {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+.blogScrollbar::-webkit-scrollbar,
+.navigation::-webkit-scrollbar,
+.modal::-webkit-scrollbar,
+.editor::-webkit-scrollbar,
+.checkboxGroup::-webkit-scrollbar,
+.permissionGroup::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.blogScrollbar::-webkit-scrollbar-track,
+.navigation::-webkit-scrollbar-track,
+.modal::-webkit-scrollbar-track,
+.editor::-webkit-scrollbar-track,
+.checkboxGroup::-webkit-scrollbar-track,
+.permissionGroup::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.blogScrollbar::-webkit-scrollbar-thumb,
+.navigation::-webkit-scrollbar-thumb,
+.modal::-webkit-scrollbar-thumb,
+.editor::-webkit-scrollbar-thumb,
+.checkboxGroup::-webkit-scrollbar-thumb,
+.permissionGroup::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 4px;
+  border: 2px solid #ffffff;
+}
+
+.blogScrollbar::-webkit-scrollbar-thumb:hover,
+.navigation::-webkit-scrollbar-thumb:hover,
+.modal::-webkit-scrollbar-thumb:hover,
+.editor::-webkit-scrollbar-thumb:hover,
+.checkboxGroup::-webkit-scrollbar-thumb:hover,
+.permissionGroup::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e0;
+}
+
+/* Pour Firefox */
+.blogScrollbar,
+.navigation,
+.modal,
+.editor,
+.checkboxGroup,
+.permissionGroup {
+  /* scrollbar-width: thin; */
+  scrollbar-color: #e2e8f0 #ffffff00;
+} 

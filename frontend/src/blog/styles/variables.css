@@ -1,0 +1,54 @@
+:root {
+  /* Couleurs de base */
+  --primary: #4299e1;
+  --secondary: #e2e8f0;
+  --accent: #ed8936;
+  
+  /* Couleurs de fond */
+  --background_main: #ffffff;
+  --background_alt: #f7fafc;
+  --background_dark: #2d3748;
+  --sidebar_background: #2d3748;
+  
+  /* Couleurs des cartes et conteneurs */
+  --card_background: #ffffff;
+  --card_border: #e2e8f0;
+  --modal_background: #ffffff;
+  --modal_overlay: rgba(0, 0, 0, 0.5);
+  --dropdown_background: #ffffff;
+  
+  /* Couleurs du texte */
+  --text_primary: #2d3748;
+  --text_secondary: #4a5568;
+  --text_light: #ffffff;
+  --text_muted: #718096;
+  --text_link: #4299e1;
+  --text_hover: #2b6cb0;
+  --sidebar_text: #ffffff;
+  
+  /* Couleurs des boutons */
+  --button_primary_bg: #4299e1;
+  --button_primary_text: #ffffff;
+  --button_secondary_bg: #e2e8f0;
+  --button_secondary_text: #2d3748;
+  --button_danger_bg: #e53e3e;
+  --button_danger_text: #ffffff;
+  
+  /* Couleurs des formulaires */
+  --input_background: #ffffff;
+  --input_border: #e2e8f0;
+  --input_text: #2d3748;
+  --input_placeholder: #a0aec0;
+  --input_focus_border: #4299e1;
+  
+  /* Couleurs de statut */
+  --success: #48bb78;
+  --warning: #ed8936;
+  --error: #e53e3e;
+  --info: #4299e1;
+
+  /* Dimensions fixes */
+  --navbar_height: 80px;
+  --footer_height: 60px;
+  --sidebar_width: 280px;
+} 
