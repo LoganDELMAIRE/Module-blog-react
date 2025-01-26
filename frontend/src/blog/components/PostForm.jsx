@@ -133,45 +133,41 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
     setError(null);
 
     try {
+      const postData = {
+        title: formData.title,
+        content: formData.content,
+        categories: formData.categories,
+        tags: formData.tags,
+        status: formData.status,
+        featuredImage: formData.featuredImage
+      };
+
       if (post) {
-        await axios.put(`/api/blog/posts/${post._id}`, {
-          ...formData,
-          author: currentUser._id
-        });
+        // Mise à jour d'un article existant
+        const response = await axios.put(`/api/blog/posts/${post._id}`, postData);
+        onSuccess(response.data);
         alert('Article modifié avec succès!');
       } else {
+        // Création d'un nouvel article
         const postFormData = new FormData();
-        postFormData.append('title', formData.title);
-        postFormData.append('content', formData.content);
-        postFormData.append('excerpt', formData.excerpt);
-        
-        const slug = formData.title.toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '');
-        postFormData.append('slug', slug);
-        
-        if (formData.categories.length > 0) {
-          postFormData.append('categories', JSON.stringify(formData.categories));
-        }
-        if (formData.tags.length > 0) {
-          postFormData.append('tags', JSON.stringify(formData.tags));
-        }
-        if (formData.featuredImage) {
-          postFormData.append('image', formData.featuredImage);
-        }
-
-        const response = await axios.post('/api/blog/posts', postFormData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        Object.keys(postData).forEach(key => {
+          if (key === 'categories' || key === 'tags') {
+            if (postData[key].length > 0) {
+              postFormData.append(key, JSON.stringify(postData[key]));
+            }
+          } else if (postData[key] !== null) {
+            postFormData.append(key, postData[key]);
           }
         });
 
+        const response = await axios.post('/api/blog/posts', postFormData);
         onSuccess(response.data);
         resetForm();
+        alert('Article créé avec succès!');
       }
     } catch (error) {
-      console.error('Error creating post:', error.response?.data || error);
-      setError(error.response?.data?.message || 'Error creating post');
+      logger.error('Error creating/updating post:', error.response?.data || error);
+      setError(error.response?.data?.message || 'Error saving post');
     } finally {
       setLoading(false);
     }

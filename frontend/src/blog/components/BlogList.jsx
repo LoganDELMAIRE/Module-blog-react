@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../utils/axios';
-import PostModal from './PostModal';
 import styles from '../styles/Blog.module.css';
 import { getTranslation } from '../translations/Translation';
 import { useLanguage } from '../translations/LanguageContext';
@@ -8,10 +8,10 @@ import logger from '../utils/logger';
 import { FaEye } from 'react-icons/fa';
 
 const BlogList = () => {
+  const navigate = useNavigate();
   const { language } = useLanguage();
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
@@ -231,7 +231,7 @@ const BlogList = () => {
           <article 
             key={post._id} 
             className={styles.postCard}
-            onClick={() => setSelectedPost(post)}
+            onClick={() => navigate(`/blog/article/${post._id}`)}
           >
             {post.featuredImage && (
               <img 
@@ -254,7 +254,6 @@ const BlogList = () => {
                 </div>
               )}
 
-              
               {post.tags && post.tags.length > 0 && (
                 <div className={styles.tagsList}>
                   {getTranslation(language, 'blog.tag_name')}:
@@ -278,11 +277,6 @@ const BlogList = () => {
           </article>
         ))}
       </div>
-
-      <PostModal 
-        post={selectedPost} 
-        onClose={() => setSelectedPost(null)} 
-      />
     </div>
   );
 };

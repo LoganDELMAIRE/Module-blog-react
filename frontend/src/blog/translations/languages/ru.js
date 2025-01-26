@@ -186,5 +186,7 @@ export const ru = {
         all_categories: 'Все категории',
         all_tags: 'Все теги',
         reset_filters: 'Сбросить фильтры',
+        views: 'Просмотров',
+        back_to_list: 'Вернуться к списку',
     }   
 }; 

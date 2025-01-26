@@ -5,6 +5,7 @@ const cloudinary = require('cloudinary').v2;
 const logger = require('../utils/logger');
 const upload = require('../middleware/upload');
 
+// Route pour récupérer tous les articles
 router.get('/', async (req, res) => {
   try {
     const conn = req.app.get('blogConnection');
@@ -19,6 +20,36 @@ router.get('/', async (req, res) => {
     res.json(posts);
   } catch (error) {
     logger.error('Error fetching posts:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Route pour récupérer un article spécifique
+router.get('/:id', async (req, res) => {
+  try {
+    console.log('Fetching post with ID:', req.params.id); // Debug log
+    const conn = req.app.get('blogConnection');
+    const Post = conn.model('Post');
+    
+    const post = await Post.findById(req.params.id)
+      .populate('author', 'username')
+      .populate('categories')
+      .populate('tags');
+    
+    console.log('Found post:', post); // Debug log
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Incrémenter le compteur de vues
+    post.views = (post.views || 0) + 1;
+    await post.save();
+    
+    res.json(post);
+  } catch (error) {
+    console.error('Error details:', error); // Debug log
+    logger.error('Error fetching post:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -77,7 +108,9 @@ router.put('/:id', blogAuth, async (req, res) => {
       return res.status(404).json({ message: 'Post not found' });
     }
     
-    if (post.author.toString() !== req.userId && req.user.role !== 'admin') {
+    if (post.author._id.toString() !== req.user._id.toString() && 
+        req.user.role.name !== 'admin' && 
+        req.user.role.name !== 'super_admin') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
@@ -96,7 +129,7 @@ router.put('/:id', blogAuth, async (req, res) => {
       {
         title: req.body.title,
         content: req.body.content,
-        slug: req.body.title.toLowerCase().replace(/ /g, '-'),
+        slug: req.body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         status: req.body.status,
         categories: req.body.categories,
         tags: req.body.tags,

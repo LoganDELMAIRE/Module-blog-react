@@ -195,5 +195,7 @@ export const es = {
         all_categories: 'Todas las categorías',
         all_tags: 'Todas las etiquetas',
         reset_filters: 'Restablecer filtros',
+        views: 'Vistas',
+        back_to_list: 'Volver a la lista',
     }
 }; 

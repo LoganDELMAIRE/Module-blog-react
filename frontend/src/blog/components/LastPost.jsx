@@ -52,26 +52,28 @@ const LastPost = () => {
     <div className="last-posts">
       <div className="last-posts-grid">
         {posts.map(post => (
-          <article key={post._id} className="last-post-card">
-            {post.coverImage && (
-              <div className="last-post-image-container">
-                <img src={post.coverImage} alt={post.title} className="last-post-image" />
+          <Link to={`/blog/article/${post._id}`} key={post._id} className="last-post-link">
+            <article className="last-post-card">
+              {post.coverImage && (
+                <div className="last-post-image-container">
+                  <img src={post.coverImage} alt={post.title} className="last-post-image" />
+                </div>
+              )}
+              <div className="last-post-content">
+                <h3>{post.title}</h3>
+                <p className="last-post-excerpt">{post.excerpt}</p>
+                <div className="last-post-meta">
+                  <span className="last-post-date">
+                    {new Date(post.createdAt).toLocaleDateString('fr-FR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
               </div>
-            )}
-            <div className="last-post-content">
-              <h3>{post.title}</h3>
-              <p className="last-post-excerpt">{post.excerpt}</p>
-              <div className="last-post-meta">
-                <span className="last-post-date">
-                  {new Date(post.createdAt).toLocaleDateString('fr-FR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </span>
-              </div>
-            </div>
-          </article>
+            </article>
+          </Link>
         ))}
       </div>
     </div>
