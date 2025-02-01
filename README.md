@@ -1,4 +1,4 @@
-# Plugin Blog for React
+# Module Blog for React
 
 ## ✨ Features
 
