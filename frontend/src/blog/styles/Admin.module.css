@@ -201,6 +201,22 @@
   transition: all 0.2s ease;
 }
 
+.input[type="datetime-local"] {
+  padding: 0.65rem 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 .input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
@@ -414,9 +430,10 @@
 }
 
 .status {
+  display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
@@ -427,6 +444,11 @@
 
 .status.published {
   background: var(--success);
+  color: var(--text_light);
+}
+
+.status.scheduled {
+  background: var(--primary);
   color: var(--text_light);
 }
 

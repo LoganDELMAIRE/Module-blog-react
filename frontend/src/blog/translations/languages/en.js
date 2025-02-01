@@ -29,6 +29,9 @@ export const en = {
         delete: 'Delete',
         draft: 'Draft',
         published: 'Published',
+        scheduled: 'Scheduled',
+        scheduled_date: 'Scheduled date',
+        scheduled_at: 'Scheduled at',
         no_article: 'No article created',
     },
     form_article: {
@@ -50,6 +53,9 @@ export const en = {
         create: 'Create',
         draft: 'Draft',
         published: 'Published',
+        scheduled: 'Scheduled',
+        scheduled_date: 'Scheduled date',
+        scheduled_at: 'Scheduled at',
     },
     list_tags: {
         tags: 'Tags',

@@ -19,7 +19,8 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
     categories: [],
     tags: [],
     status: 'draft',
-    featuredImage: null
+    featuredImage: null,
+    scheduledDate: null
   });
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
@@ -47,7 +48,8 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
             categories: post.categories?.map(cat => cat._id) || [],
             tags: post.tags?.map(tag => tag._id) || [],
             status: post.status || 'draft',
-            featuredImage: post.featuredImage || null
+            featuredImage: post.featuredImage || null,
+            scheduledDate: post.scheduledDate ? new Date(post.scheduledDate).toISOString().slice(0, 16) : null
           });
 
           if (quillRef.current) {
@@ -120,7 +122,8 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
       categories: [],
       tags: [],
       status: 'draft',
-      featuredImage: null
+      featuredImage: null,
+      scheduledDate: null
     });
     if (quillRef.current) {
       quillRef.current.getEditor().setText('');
@@ -133,6 +136,7 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
     setError(null);
 
     try {
+      // Préparer les données de base
       const postData = {
         title: formData.title,
         content: formData.content,
@@ -142,29 +146,51 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
         featuredImage: formData.featuredImage
       };
 
+      // Ajouter la date programmée si nécessaire
+      if (formData.status === 'scheduled' && formData.scheduledDate) {
+        postData.scheduledDate = new Date(formData.scheduledDate).toISOString();
+      }
+
+      let response;
+      
       if (post) {
         // Mise à jour d'un article existant
-        const response = await axios.put(`/api/blog/posts/${post._id}`, postData);
-        onSuccess(response.data);
-        alert('Article modifié avec succès!');
+        response = await axios.put(`/api/blog/posts/${post._id}`, postData);
       } else {
         // Création d'un nouvel article
-        const postFormData = new FormData();
-        Object.keys(postData).forEach(key => {
-          if (key === 'categories' || key === 'tags') {
-            if (postData[key].length > 0) {
-              postFormData.append(key, JSON.stringify(postData[key]));
-            }
-          } else if (postData[key] !== null) {
-            postFormData.append(key, postData[key]);
+        const formDataToSend = new FormData();
+        
+        // Ajouter les champs simples
+        formDataToSend.append('title', postData.title);
+        formDataToSend.append('content', postData.content);
+        formDataToSend.append('status', postData.status);
+        
+        // Ajouter les tableaux en tant que JSON strings
+        formDataToSend.append('categories', JSON.stringify(postData.categories));
+        formDataToSend.append('tags', JSON.stringify(postData.tags));
+        
+        // Ajouter la date programmée si nécessaire
+        if (postData.scheduledDate) {
+          formDataToSend.append('scheduledDate', postData.scheduledDate);
+        }
+        
+        // Ajouter l'image si elle existe
+        if (postData.featuredImage) {
+          formDataToSend.append('featuredImage', JSON.stringify(postData.featuredImage));
+        }
+
+        response = await axios.post('/api/blog/posts', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
         });
-
-        const response = await axios.post('/api/blog/posts', postFormData);
-        onSuccess(response.data);
-        resetForm();
-        alert('Article créé avec succès!');
       }
+
+      onSuccess(response.data);
+      if (!post) {
+        resetForm();
+      }
+      alert(post ? 'Article modifié avec succès!' : 'Article créé avec succès!');
     } catch (error) {
       logger.error('Error creating/updating post:', error.response?.data || error);
       setError(error.response?.data?.message || 'Error saving post');
@@ -331,13 +357,37 @@ const PostForm = ({ post, onCancel, onSuccess }) => {
             value={formData.status}
             onChange={(e) => setFormData(prev => ({
               ...prev,
-              status: e.target.value
+              status: e.target.value,
+              scheduledDate: e.target.value !== 'scheduled' ? null : prev.scheduledDate
             }))}
           >
             <option value="draft">{getTranslation(language, 'form_article.draft')}</option>
             <option value="published">{getTranslation(language, 'form_article.published')}</option>
+            <option value="scheduled">{getTranslation(language, 'form_article.scheduled')}</option>
           </select>
         </div>
+
+        {formData.status === 'scheduled' && (
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              {getTranslation(language, 'form_article.scheduled_date')}
+            </label>
+            <input
+              type="datetime-local"
+              className={styles.input}
+              value={formData.scheduledDate || ''}
+              onChange={(e) => {
+                const date = new Date(e.target.value);
+                setFormData(prev => ({
+                  ...prev,
+                  scheduledDate: date.toISOString().slice(0, 16)
+                }));
+              }}
+              min={new Date().toISOString().slice(0, 16)}
+              required={formData.status === 'scheduled'}
+            />
+          </div>
+        )}
 
         <div className={styles.formActions}>
           <button type="button" onClick={onCancel} className={styles.cancelButton}>

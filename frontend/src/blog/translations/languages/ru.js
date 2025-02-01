@@ -29,6 +29,9 @@ export const ru = {
         delete: 'Удалить',
         draft: 'Черновик',
         published: 'Опубликовано',
+        scheduled: 'Запланировано',
+        scheduled_date: 'Дата запланирования',
+        scheduled_at: 'Запланировано в',
         no_article: 'Нет статей',
     },
     form_article: {
@@ -41,6 +44,9 @@ export const ru = {
         categories: 'Категории',
         tags: 'Теги',
         status: 'Статус',
+        scheduled: 'Запланировано',
+        scheduled_date: 'Дата запланирования',
+        scheduled_at: 'Запланировано в',
     },      
     list_tags: {
         tags: 'Теги',

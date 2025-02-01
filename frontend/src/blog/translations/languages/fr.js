@@ -30,6 +30,9 @@ export const fr = {
         draft: 'Brouillon',
         published: 'Publié',
         no_article: 'Aucun article n\'a été créé',
+        scheduled: 'Programé',
+        scheduled_date: 'Date programée',
+        scheduled_at: 'Programé le',
     },
     form_article: {
         cancel: 'Annuler',
@@ -50,6 +53,9 @@ export const fr = {
         create: 'Créer',
         draft: 'Brouillon',
         published: 'Publié',
+        scheduled: 'Programé',
+        scheduled_date: 'Date programée',
+        scheduled_at: 'Programé le',
     },
     list_tags: {
         tags: 'Tags',

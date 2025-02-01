@@ -42,6 +42,31 @@ const PostsList = ({ onCreateNew, onEdit }) => {
     }
   };
 
+  const formatScheduledDate = (date) => {
+    if (!date) return '';
+    const scheduledDate = new Date(date);
+    return scheduledDate.toLocaleString(language, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getStatusTranslation = (status, scheduledDate) => {
+    switch (status) {
+      case 'draft':
+        return getTranslation(language, 'list_articles.draft');
+      case 'published':
+        return getTranslation(language, 'list_articles.published');
+      case 'scheduled':
+        return `${getTranslation(language, 'list_articles.scheduled')} (${formatScheduledDate(scheduledDate)})`;
+      default:
+        return status;
+    }
+  };
+
   if (loading) return <div>Chargement...</div>;
 
   return (
@@ -75,9 +100,7 @@ const PostsList = ({ onCreateNew, onEdit }) => {
                   </td>
                   <td data-label={getTranslation(language, 'list_articles.status')}>
                     <span className={`${styles.status} ${styles[post.status]}`}>
-                      {post.status === 'draft' ? 
-                        getTranslation(language, 'list_articles.draft') : 
-                        getTranslation(language, 'list_articles.published')}
+                      {getStatusTranslation(post.status, post.scheduledDate)}
                     </span>
                   </td>
                   <td data-label={getTranslation(language, 'list_articles.created_at')}>

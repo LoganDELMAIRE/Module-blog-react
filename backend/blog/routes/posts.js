@@ -59,7 +59,7 @@ router.post('/', blogAuth, upload.single('image'), async (req, res) => {
     console.log('Received request body:', req.body);
     console.log('Received file:', req.file);
 
-    const { title, content, excerpt, categories, tags } = req.body;
+    const { title, content, excerpt, categories, tags, status, scheduledDate } = req.body;
 
     if (!title || !content) {
       return res.status(400).json({ message: 'Title and content are required' });
@@ -72,11 +72,12 @@ router.post('/', blogAuth, upload.single('image'), async (req, res) => {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
     
-    const post = new Post({
+    const postData = {
       title,
       content,
       excerpt,
       slug,
+      status: status || 'draft',
       categories: categories ? JSON.parse(categories) : [],
       tags: tags ? JSON.parse(tags) : [],
       author: req.user.id,
@@ -84,10 +85,23 @@ router.post('/', blogAuth, upload.single('image'), async (req, res) => {
         url: req.file.path,
         filename: req.file.filename
       } : null
-    });
+    };
 
+    // Ajouter la date programmée si le statut est 'scheduled'
+    if (status === 'scheduled' && scheduledDate) {
+      postData.scheduledDate = new Date(scheduledDate);
+    }
+
+    const post = new Post(postData);
     await post.save();
-    res.status(201).json(post);
+    
+    // Récupérer l'article avec les relations peuplées
+    const savedPost = await Post.findById(post._id)
+      .populate('author', 'username')
+      .populate('categories')
+      .populate('tags');
+
+    res.status(201).json(savedPost);
   } catch (error) {
     console.error('Error creating post:', error);
     res.status(500).json({ message: error.message });
