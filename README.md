@@ -9,7 +9,7 @@
 - 🌍 Multilingual support (FR, EN, ES, DE, RU) for panel admin
 - 🎨 Customizable theme
 
-# Installation Guide for `@plugin_blog`
+# Installation Guide for `Module_Blog`
 
 ---
 
